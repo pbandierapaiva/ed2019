@@ -43,8 +43,7 @@ int leCSVgravaStru(char *nomeArq, char *arqSaida) {
 		return 1;
 		}
 	
-	while( !feof(fp) ){
-		fgets(buf, 1000,  fp);
+	while( fgets(buf, 1000,  fp) ){
 
 		p = buf;
 		while( *p!='|'  && *p!='\0' ) p++; //ignora o primeiro campo

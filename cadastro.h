@@ -4,7 +4,12 @@
 
 int leCSVgravaStru(char *, char *);
 
-typedef struct CADASTRO {
+typedef struct  {
+	char  NOME[100];
+	int offset;
+	} indexcad;	
+
+typedef struct  {
 	char  Id_SERVIDOR_PORTAL[10];
 	char  NOME[100];
 	char  DESCRICAO_CARGO[50];
