@@ -1,8 +1,8 @@
 /* Arquivo: cadastro.h
-* 	Definição de estrutura "Cadastro" e protótipo de função de gravação de CSV para arquivo estruturado 
+* 	Definição de estrutura "Cadastro" e protótipos de funções de gravação de CSV para arquivo estruturado 
 */
+#define NAOENCONTRADO -1
 
-int leCSVgravaStru(char *, char *);
 
 typedef struct  {
 	char  NOME[100];
@@ -42,4 +42,11 @@ typedef struct  {
 	char  UF_EXERCICIO[3];
 	} cadastro;
 
+
+
+
+//
+int leCSVgravaStru(char *, char *);
+int buscaIndexNome(FILE *, char *);
+int pegaRegPorIndex(cadastro *, FILE *, int);
 
