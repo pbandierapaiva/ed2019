@@ -42,7 +42,9 @@ int leCSVgravaStru(char *nomeArq, char *arqSaida) {
 		printf("Erro ao ler arquivo\n");
 		return 1;
 		}
-	
+
+	fgets(buf, 1000,  fp); // despreza a primeira linha - cabeçalho
+
 	while( fgets(buf, 1000,  fp) ){
 
 		p = buf;

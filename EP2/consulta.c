@@ -17,7 +17,9 @@
 int main() {
 	char nomebusca[100];
 	cadastro registro;
-	long int i;
+	struct ListaLigada lista;
+	struct ListaLigada *l;
+	int i;
 
 	char *p;
 	clock_t inicio, fim;
@@ -50,14 +52,21 @@ int main() {
 
 		inicio = clock();
 
-		i =  buscaIndexNome( ndxfp, nomebusca );
-		if( i==NAOENCONTRADO ){ // Não encontrado
+		i =  buscaListIndexNome( ndxfp, nomebusca, &lista );
+		if( !i ){ // Não encontrado
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
-		pegaRegPorIndex(&registro, fp, i);
-		printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
+
+		printf("Registros encontrados: %d\n\n",i);
+		l = &lista;
+		while(l->prox) {
+			pegaRegPorIndex(&registro, fp, l->prox->ind);
+			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
 					registro.NOME, registro.UORG_LOTACAO, registro.DESCRICAO_CARGO);
+			l = l->prox;
+			}
+	
 
 		fim = clock();
 		printf("Tempo de consulta %f s\n%ld\n", (double)(fim - inicio) / CLOCKS_PER_SEC, fim);
@@ -113,3 +122,52 @@ int pegaRegPorIndex(cadastro *reg, FILE *arq, int ind) {
 	return 1;
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Função: buscaListIndexNome
+// 	Busca nome em arquivo índice, retorna lista
+// Recebe: ponteiro para arquivo de índice aberto e nome para busca 
+// Retorna: indice (int), em caso de erro -1 (NAOENCONTRADO)
+int buscaListIndexNome(FILE *ndx, char *nome, struct ListaLigada *lista) {
+
+	char buf[100];
+	int indice;
+	char *p;
+	struct ListaLigada *l, *m;
+	int conta=0;
+               
+	l = lista;
+	// Limpa lista
+	while( l->prox ) {
+		m= l->prox;
+		l->prox = NULL;
+		l = m->prox;
+		free(m);
+		}
+
+	rewind(ndx); //retorna o ponteiro para o início do arquivo
+
+	m=l;
+	while( fgets( buf, 100, ndx) ) {
+		// extrai de buf o número do índice
+		p=buf;
+		while(*p!=' ') p++;
+		*p = '\0';		
+		indice = atol(buf);
+		
+		p++; // p aponta para o início do NOME
+		p[strlen(p)-1]='\0'; //remove \n
+
+		if( strstr( p, nome ) ){ // True se encontrou substring
+			m->prox = malloc(sizeof(struct ListaLigada));
+			m= m->prox;
+			m->ind = indice;
+			m->prox= NULL;
+			conta++;
+			// achou nome
+			//return indice;
+			}
+		}
+	// Nome não encontrado
+	return conta;
+}

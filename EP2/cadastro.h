@@ -3,6 +3,10 @@
 */
 #define NAOENCONTRADO -1
 
+struct ListaLigada{
+	int ind;
+	struct ListaLigada *prox;
+	} ;
 
 typedef struct  {
 	char  NOME[100];
@@ -49,4 +53,5 @@ typedef struct  {
 int leCSVgravaStru(char *, char *);
 int buscaIndexNome(FILE *, char *);
 int pegaRegPorIndex(cadastro *, FILE *, int);
+int buscaListIndexNome(FILE *, char *, struct ListaLigada *);
 
