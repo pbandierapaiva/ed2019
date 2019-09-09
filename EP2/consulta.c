@@ -18,6 +18,7 @@ int main() {
 	char nomebusca[100];
 	Cadastro registro;
 	long int i;
+	long int vetor[100];
 
 	char *p;
 	clock_t inicio, fim;
@@ -50,17 +51,21 @@ int main() {
 
 		inicio = clock();
 
-		i =  buscaIndexNome( ndxfp, nomebusca );
-		if( i==NAOENCONTRADO ){ // Não encontrado
+		//i =  buscaIndexNome( ndxfp, nomebusca );
+		i =  buscaVetorIndexNome( ndxfp, nomebusca, vetor );
+
+		if( i==0 ){ // Não encontrado
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
-		pegaRegPorIndex(&registro, fp, i);
-		printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
+		printf("Número de ocorrências encontradas: %ld\n",i);
+		for(int j=0;j<i;j++) {
+			pegaRegPorIndex(&registro, fp, vetor[j]);
+			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
 					registro.NOME, registro.UORG_LOTACAO, registro.DESCRICAO_CARGO);
-
+			}
 		fim = clock();
-		printf("Tempo de consulta %f s\n%ld\n", (double)(fim - inicio) / CLOCKS_PER_SEC, fim);
+		printf("Tempo de consulta %f s\n", (double)(fim - inicio) / CLOCKS_PER_SEC);
 		}
 
 	return 0;

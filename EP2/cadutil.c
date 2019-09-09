@@ -11,6 +11,39 @@
 
 #include "cadastro.h"
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Função: buscaVetorIndexNome
+// 	Busca nome em arquivo índice, colocando num vetor de long int
+// Recebe: ponteiro para arquivo de índice aberto, nome para busca, 
+//	endereço do vetor para retorno  
+// Retorna: número de achados (int), em caso de erro -1 (NAOENCONTRADO)
+int buscaVetorIndexNome(FILE *ndx, char *nome, long *vet) {
+	char buf[100];
+	int indice;
+	int conta=0;
+	char *p;
+
+	rewind(ndx); //retorna o ponteiro para o início do arquivo
+
+	while( fgets( buf, 100, ndx) ) {
+		// extrai de buf o número do índice
+		p=buf;
+		while(*p!=' ') p++;
+		*p = '\0';		
+		indice = atol(buf);
+		
+		p++; // p aponta para o início do NOME
+		p[strlen(p)-1]='\0'; //remove \n
+
+		if( strstr( p, nome ) ){ // True se encontrou substring
+			// achou nome
+			vet[conta]= indice;
+			conta++;
+			}
+		}
+	// Nome não encontrado
+	return conta;
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
