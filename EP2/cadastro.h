@@ -9,7 +9,7 @@ typedef struct  {
 	int offset;
 	} indexcad;	
 
-typedef struct  {
+typedef struct Cadastro {
 	char  Id_SERVIDOR_PORTAL[10];
 	char  NOME[100];
 	char  DESCRICAO_CARGO[50];
@@ -40,7 +40,7 @@ typedef struct  {
 	char  DIPLOMA_INGRESSO_ORGAO[30];
 	char  DIPLOMA_INGRESSO_SERVICOPUBLICO[30];
 	char  UF_EXERCICIO[3];
-	} cadastro;
+	} Cadastro;
 
 
 
@@ -48,5 +48,5 @@ typedef struct  {
 //
 int leCSVgravaStru(char *, char *);
 int buscaIndexNome(FILE *, char *);
-int pegaRegPorIndex(cadastro *, FILE *, int);
+int pegaRegPorIndex(Cadastro *, FILE *, int);
 
