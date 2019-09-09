@@ -64,7 +64,6 @@ int main() {
 		}
 
 	return 0;
-
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,4 +111,16 @@ int pegaRegPorIndex(cadastro *reg, FILE *arq, int ind) {
 	fread( reg, sizeof(cadastro), 1, arq);
 	return 1;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
