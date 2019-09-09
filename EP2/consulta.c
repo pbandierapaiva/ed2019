@@ -17,8 +17,8 @@
 int main() {
 	char nomebusca[100];
 	cadastro registro;
-	struct ListaLigada lista;
-	struct ListaLigada *l;
+	//ListaLigada lista;
+	ListaLigada *l=NULL;
 	int i;
 
 	char *p;
@@ -52,14 +52,16 @@ int main() {
 
 		inicio = clock();
 
-		i =  buscaListIndexNome( ndxfp, nomebusca, &lista );
+
+		i =  buscaListIndexNome( ndxfp, nomebusca, &l );
+
 		if( !i ){ // Não encontrado
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
 
 		printf("Registros encontrados: %d\n\n",i);
-		l = &lista;
+
 		while(l->prox) {
 			pegaRegPorIndex(&registro, fp, l->prox->ind);
 			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
@@ -128,26 +130,26 @@ int pegaRegPorIndex(cadastro *reg, FILE *arq, int ind) {
 // 	Busca nome em arquivo índice, retorna lista
 // Recebe: ponteiro para arquivo de índice aberto e nome para busca 
 // Retorna: indice (int), em caso de erro -1 (NAOENCONTRADO)
-int buscaListIndexNome(FILE *ndx, char *nome, struct ListaLigada *lista) {
+int buscaListIndexNome(FILE *ndx, char *nome, ListaLigada **lista) {
 
 	char buf[100];
 	int indice;
 	char *p;
-	struct ListaLigada *l, *m;
+	ListaLigada *l, *temp;
 	int conta=0;
-               
-	l = lista;
+          
+
+	l = *lista;
 	// Limpa lista
-	while( l->prox ) {
-		m= l->prox;
-		l->prox = NULL;
-		l = m->prox;
-		free(m);
+	while( l ) {
+		temp= l->prox;
+		free(l);
+		l= temp;
 		}
 
 	rewind(ndx); //retorna o ponteiro para o início do arquivo
 
-	m=l;
+	l=*lista;
 	while( fgets( buf, 100, ndx) ) {
 		// extrai de buf o número do índice
 		p=buf;
@@ -159,13 +161,12 @@ int buscaListIndexNome(FILE *ndx, char *nome, struct ListaLigada *lista) {
 		p[strlen(p)-1]='\0'; //remove \n
 
 		if( strstr( p, nome ) ){ // True se encontrou substring
-			m->prox = malloc(sizeof(struct ListaLigada));
-			m= m->prox;
-			m->ind = indice;
-			m->prox= NULL;
+			l = malloc(sizeof(ListaLigada));
+			l->prox = NULL;
+			l = l->prox;
+
 			conta++;
 			// achou nome
-			//return indice;
 			}
 		}
 	// Nome não encontrado
