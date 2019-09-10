@@ -26,11 +26,11 @@ int main() {
 	FILE *fp, *ndxfp;
 
 	// Abre arquivos de dados e de índice
-	if( !(ndxfp = fopen("cadstru.ndx","r")) ) {
+	if( !(ndxfp = fopen("../data/cadstru.ndx","r")) ) {
 		printf("Erro ao abrir arquivo índice.\n");
 		return 1;
 		}
-	if( !(fp = fopen("cadstru.arq","r")) ) {
+	if( !(fp = fopen("../data/cadstru.arq","r")) ) {
 		printf("Erro ao abrir arquivo de dados.\n");
 		return 1;
 		}
@@ -39,15 +39,19 @@ int main() {
 	while(1) {
 		printf("Entre com nome para busca (Ctrl+C termina): ");
 		fgets( nomebusca, 100, stdin);
-		nomebusca[ strlen(nomebusca)-1 ] = '\0';
 
-		// transforma o string para maiúsculas
+
+		// 
+		//nomebusca[strlen(nomebusca)-1] = '\0';
+
+		// transforma o string para maiúsculas e o \n em \0
 		p = nomebusca;
 		while( *p!='\0' && *p!='\n') {
 			*p = toupper(*p);
 			p++;
 			}
 		*p = '\0';
+
 
 		inicio = clock();
 

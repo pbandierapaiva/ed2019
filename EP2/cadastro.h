@@ -4,11 +4,6 @@
 #define NAOENCONTRADO -1
 
 
-typedef struct  {
-	char  NOME[100];
-	int offset;
-	} indexcad;	
-
 typedef struct Cadastro {
 	char  Id_SERVIDOR_PORTAL[10];
 	char  NOME[100];
