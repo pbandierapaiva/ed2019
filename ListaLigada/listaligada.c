@@ -15,13 +15,16 @@ void insereLL(long int valor, struct ListaLigada *lista) {
 	novoNo->valor = valor;
 	novoNo->proximo = NULL;
 
-	if(lista->proximo) {
-		novoNo->proximo = lista->proximo;
+	p = lista->proximo;
+	if(p==NULL) {   //Lista vazia
 		lista->proximo = novoNo;
-		}	
-	else {
-		lista->proximo = novoNo;
+		return;
 		}
+	
+	while( p->proximo != NULL )
+		p = p->proximo;
+	p->proximo = novoNo;
+
 }
 
 void imprimeLL(struct ListaLigada lista) {
@@ -36,13 +39,42 @@ void imprimeLL(struct ListaLigada lista) {
 
 }
 
+void removePtrItemLL(struct ListaLigada *item, struct ListaLigada *raiz) {
+	struct ListaLigada *p;
+
+	p = raiz;
+	while( p->proximo != item  && p != NULL) {
+		p = p->proximo;	
+	}
+	if(p==NULL) {
+		printf("\nItem não encontrado.\n");
+		return;
+	}
+		
+	p->proximo = p->proximo->proximo;
+	free( item );
+}
+
+void removeItemPorValorLL(long val, struct ListaLigada *raiz) {
+	struct ListaLigada *p;
+
+	p = raiz->proximo;
+
+	while( p ) {
+		if( p->valor==val )
+			removePtrItemLL(p, raiz);
+		p = p->proximo;
+	}
+}
+
 int main(){
 
-	long int valor;
+	long int valor, buscaval;
 	struct ListaLigada noRaiz; 
 
 	noRaiz.valor=0;
 	noRaiz.proximo=NULL;
+
 
 
 	while(1) {
@@ -55,6 +87,11 @@ int main(){
 	}
 	imprimeLL(noRaiz);
 
+	printf("Entre com valor a ser removido: ");
+	scanf("%ld",&valor);
+	removeItemPorValorLL(valor, &noRaiz);
+
+	imprimeLL(noRaiz);	
 
 
 }
