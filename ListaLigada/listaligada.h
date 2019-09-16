@@ -9,4 +9,8 @@ struct ListaLigada {
 };
 
 
+void insereLL(long int, struct ListaLigada *);
+void imprimeLL(struct ListaLigada);
+void removePtrItemLL(struct ListaLigada *, struct ListaLigada *);
+void removeItemPorValorLL(long, struct ListaLigada *);
 
