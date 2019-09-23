@@ -1,15 +1,12 @@
-
-
 /* Arquivo: .c
 * 	Definição de funções que implementam árvores binárias.
 */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "arvore.h"
-
-
 
 int main() {
 
@@ -29,6 +26,8 @@ int main() {
 		}
 
 	imprime( raiz );
+
+	printf("Profundidade: %d\n",profundidade(raiz)); 
 
 	return 0;
 }
@@ -62,6 +61,22 @@ void imprime(struct arvore *no) {  //imprime em-ordem
 	if( no->pd )
 		imprime(no->pd);	
 	}
+
+
+int maximo(int a, int b){
+	if(a>b) return a;
+	return b;
+	}
+int profundidade(struct arvore *no) {
+	if( !no )
+		return 0;
+	return 1+maximo(profundidade(no->pe),profundidade(no->pd));
+	}
+	
+
+
+
+
 
 
 

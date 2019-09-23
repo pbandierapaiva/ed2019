@@ -1,4 +1,7 @@
 /* Arquivo arvore.h
+
+	Protótipos e estrutura de dados de árvore binária
+
 */
 
 struct arvore {
@@ -8,3 +11,6 @@ struct arvore {
 
 void insere(int valor, struct arvore **noraiz);
 void imprime(struct arvore *no);
+
+int maximo(int a, int b);
+int profundidade(struct arvore *no);
