@@ -3,7 +3,7 @@
 #
 #
 
-C = gcc
+C = gcc -g
 
 all: consulta consulta-dl
 

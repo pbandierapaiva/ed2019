@@ -130,3 +130,14 @@ int carregaIndice(char *arqIndice, struct ListaDL *lista){
 
 
 
+
+
+
+
+
+
+
+
+
+
+

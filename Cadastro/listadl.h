@@ -14,3 +14,7 @@ struct ListaDL {
 void insereDL(long int, char *, struct ListaDL *);
 void imprimeDL(struct ListaDL);
 void apagaDL(struct ListaDL *);
+void swapAdjDL(struct ListaDL *);
+void swapDL(struct ListaDL *,struct ListaDL *);
+void ordenaDL(struct ListaDL *);
+

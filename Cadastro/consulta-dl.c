@@ -72,7 +72,10 @@ int main() {
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
-	
+		// Ordena resultado
+		//ordenaDL(&raizResultadoBusca );
+		
+
 		pdl = raizResultadoBusca.proximo;
 		while(pdl) {
 			pegaRegPorIndex(&registro, fp, pdl->indice);
