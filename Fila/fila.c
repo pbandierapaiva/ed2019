@@ -55,17 +55,32 @@ int main(){
 
 
 	while(1) {
-		printf("\nEntrando ou saindo (E/S): ");
+		printf("\nColoca, Retira, Imprime, Sai(C/R/I/S): ");
 		scanf("%c",&es);
 
-		if(toupper(es)=='E') {
+		switch ( toupper(es) ) {
+		case 'C':
 			printf("Entre com valor inteiro: ");
 			scanf("%ld",&valor);
 			insere(valor, &noRaiz);
 			printf("OK\n");
-			}
-		if(toupper(es)=='S') 
-			printf("%ld\n",remover(&noRaiz));				
+			break;
+		case 'R':
+			printf("Removeu: %ld\n",remover(&noRaiz));
+			break;
+		case 'I':
+			
+			break;
+
+		case 'S':
+			exit();
+			break;
+		default:
+			printf("Entre uma opção válida\n");
+			break;
+		
+		}
+
 	}
 }
 

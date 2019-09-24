@@ -12,13 +12,15 @@
 #include <time.h>	// para clock()
 
 #include "cadastro.h"
-
+#include "listadl.h"
 
 int main() {
 	char nomebusca[100];
 	Cadastro registro;
 	long int i;
-	long int vetor[1000000];
+	//long int vetor[1000000];
+
+	struct ListaDL raiz, *pdl;
 
 	char *p;
 	clock_t inicio, fim;
@@ -56,16 +58,19 @@ int main() {
 		inicio = clock();
 
 		//i =  buscaIndexNome( ndxfp, nomebusca );
-		i =  buscaVetorIndexNome( ndxfp, nomebusca, vetor );
+		i =  buscaListaIndexNome( ndxfp, nomebusca, &raiz );
 
 		if( i==0 ){ // Não encontrado
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
-		for(int j=0;j<i;j++) {
-			pegaRegPorIndex(&registro, fp, vetor[j]);
+	
+		pdl = raiz.proximo;
+		while(pdl) {
+			pegaRegPorIndex(&registro, fp, pdl->valor);
 			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
 					registro.NOME, registro.UORG_LOTACAO, registro.DESCRICAO_CARGO);
+			pdl = pdl->proximo;
 			}
 		printf("Número de ocorrências encontradas: %ld\n",i);
 		fim = clock();

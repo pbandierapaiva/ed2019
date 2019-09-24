@@ -1,7 +1,9 @@
 /*
-* Programa: c.c
+* Programa: consulta-dl.c
 * 
 * Busca nome em arquivo indexado, recupera registro, cronometra o tempo de busca
+*
+* Utiliza índice em uma lista duplamente encadeada alocada dinamicamente em memória ListaDL  
 *
 */
 
@@ -21,34 +23,36 @@ int main() {
 	long int i;
 	//long int vetor[1000000];
 
-	struct ListaDL raiz, *pdl;
+	struct ListaDL raizResultadoBusca, *pdl, raizIndice;
+	
+	strcpy(raizResultadoBusca.nome,"NO RAIZ");
+	raizResultadoBusca.indice=0;
+	raizResultadoBusca.proximo=NULL; // Lista vazia
 
-	strcpy(raiz.nome,"NO RAIZ");
-	raiz.indice=0;
-	raiz.proximo=NULL; // Lista vazia
+	strcpy(raizIndice.nome,"NO RAIZ");
+	raizIndice.indice=0;
+	raizIndice.proximo=NULL; // Lista vazia
 
 	char *p;
 	clock_t inicio, fim;
 
 	FILE *fp, *ndxfp;
 
-	// Abre arquivos de dados e de índice
-	if( !(ndxfp = fopen("../data/cadstru.ndx","r")) ) {
-		printf("Erro ao abrir arquivo índice.\n");
-		return 1;
-		}
+	// Abre arquivos de dados
 	if( !(fp = fopen("../data/cadstru.arq","r")) ) {
 		printf("Erro ao abrir arquivo de dados.\n");
 		return 1;
 		}
+	// Carrega índice em lista duplamente ligada - ListaDL
+	printf("Registros carregados em lista duplamente ligada: %ld\n",
+		carregaIndice("../data/cadstru.ndx", &raizIndice) );
 
-	
+	// Inicia Interface com o usuário
 	while(1) {
 		printf("Entre com nome para busca (Ctrl+C termina): ");
 		fgets( nomebusca, 100, stdin);
 
-
-		// transforma o string para maiúsculas (toupper) e substitui \n para \0
+		// transforma o string para maiúsculas e o \n em \0
 		p = nomebusca;
 		while( *p!='\0' && *p!='\n') {
 			*p = toupper(*p);
@@ -59,8 +63,9 @@ int main() {
 
 		inicio = clock(); // INICIA CRONOMETRO
 
-		// busca nome no arquivo índice
-		i =  buscaListaIndexNome( ndxfp, nomebusca, &raiz );
+
+		i =  buscaNome( nomebusca, raizIndice, &raizResultadoBusca );
+
 		fim = clock(); // PARA CRONOMETRO
 
 		if( i==0 ){ // Não encontrado
@@ -68,7 +73,7 @@ int main() {
 			continue;
 			}
 	
-		pdl = raiz.proximo;
+		pdl = raizResultadoBusca.proximo;
 		while(pdl) {
 			pegaRegPorIndex(&registro, fp, pdl->indice);
 			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
@@ -76,6 +81,7 @@ int main() {
 			pdl = pdl->proximo;
 			}
 		printf("Número de ocorrências encontradas: %ld\n",i);
+
 		printf("Tempo de consulta %f s\n", (double)(fim - inicio) / CLOCKS_PER_SEC);
 		}
 

@@ -3,6 +3,7 @@
 */
 #define NAOENCONTRADO -1
 
+ 	
 
 typedef struct Cadastro {
 	char  Id_SERVIDOR_PORTAL[10];
@@ -36,16 +37,6 @@ typedef struct Cadastro {
 	char  DIPLOMA_INGRESSO_SERVICOPUBLICO[30];
 	char  UF_EXERCICIO[3];
 	} Cadastro;
-
-
-
-
-// Protótipos
-int leCSVgravaStru(char *, char *);
-int buscaVetorIndexNome(FILE *, char *, long *);
-int buscaIndexNome(FILE *, char *);
-int pegaRegPorIndex(Cadastro *, FILE *, int);
-
 
 
 

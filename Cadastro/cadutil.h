@@ -1,10 +1,10 @@
+/* Arquivo: cadutil.h
+* 	Protótipos de funções utilitárias para o cadastro
+*/
 
-
-
-// Protótipos
-int leCSVgravaStru(char *, char *);
-int buscaVetorIndexNome(FILE *, char *, long *);
 int buscaIndexNome(FILE *, char *);
-int pegaRegPorIndex(Cadastro *, FILE *, int);
 int buscaListaIndexNome(FILE *, char *, struct ListaDL *);
+int pegaRegPorIndex(Cadastro *, FILE *, int);
+int buscaNome( char *, struct ListaDL,  struct ListaDL *);
+int carregaIndice(char *, struct ListaDL *);
 

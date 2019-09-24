@@ -1,8 +1,7 @@
 /*
 * Arquivo: cadutil.c
 * 
-* Funções para busca nome em arquivo indexado, 
-* recuperação de registro
+* Funções utilitárias para o cadastro. Busca nome em arquivo indexado, recupera registro
 *
 */
 #include <stdio.h>
@@ -11,6 +10,38 @@
 
 #include "cadastro.h"
 #include "listadl.h"
+
+// UTILIZANDO LISTA DUPLAMENTE LIGADA
+//
+// Função: buscaNome
+// Recebe ponteiro para arquivo aberto de índice, ponteiro para string com nome e ponteiro para
+//	lista ligada que receberá a lista de nomes e índices encontrados
+// Retorna: número de nomes encontrados 
+int buscaNome( char *nomeBusca, struct ListaDL listaIndice,  struct ListaDL *listaResultado) {
+	char buf[100];
+	int indice;
+	int conta=0;
+	struct ListaDL *p;
+
+	apagaDL( listaResultado ); 
+	p = listaIndice.proximo;
+	while( p ) {
+		if( strstr( p->nome, nomeBusca ) ){ // True se encontrou substring
+			// achou nome
+			insereDL(p->indice, p->nome, listaResultado); 
+			conta++;
+			}
+		p = p->proximo;
+		}
+	return conta;
+}
+
+// UTILIZANDO ACESSO AO ARQUIVO DE INDICE
+//
+// Função: buscaListaIndexNome
+// Recebe ponteiro para arquivo aberto de índice, ponteiro para string com nome e ponteiro para
+//	lista ligada que receberá a lista de nomes e índices encontrados
+// Retorna: número de nomes encontrados 
 
 int buscaListaIndexNome(FILE *ndx, char *nome, struct ListaDL *lista) {
 	char buf[100];
@@ -43,78 +74,6 @@ int buscaListaIndexNome(FILE *ndx, char *nome, struct ListaDL *lista) {
 }
 
 
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Função: buscaVetorIndexNome
-// 	Busca nome em arquivo índice, colocando num vetor de long int
-// Recebe: ponteiro para arquivo de índice aberto, nome para busca, 
-//	endereço do vetor para retorno  
-// Retorna: número de achados (int), em caso de erro -1 (NAOENCONTRADO)
-int buscaVetorIndexNome(FILE *ndx, char *nome, long *vet) {
-	char buf[100];
-	int indice;
-	int conta=0;
-	char *p;
-
-	rewind(ndx); //retorna o ponteiro para o início do arquivo
-
-	while( fgets( buf, 100, ndx) ) {
-		// extrai de buf o número do índice
-		p=buf;
-		while(*p!=' ') p++;
-		*p = '\0';		
-		indice = atol(buf);
-		
-		p++; // p aponta para o início do NOME
-		p[strlen(p)-1]='\0'; //remove \n
-
-		if( strstr( p, nome ) ){ // True se encontrou substring
-			// achou nome
-			vet[conta]= indice;
-			conta++;
-			}
-		}
-	// Nome não encontrado
-	return conta;
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Função: buscaIndexNome
-// 	Busca nome em arquivo índice
-// Recebe: ponteiro para arquivo de índice aberto e nome para busca 
-// Retorna: indice (int), em caso de erro -1 (NAOENCONTRADO)
-int buscaIndexNome(FILE *ndx, char *nome) {
-
-	char buf[100];
-	int indice;
-	char *p;
-
-	rewind(ndx); //retorna o ponteiro para o início do arquivo
-
-	while( fgets( buf, 100, ndx) ) {
-		// extrai de buf o número do índice
-		p=buf;
-		while(*p!=' ') p++;
-		*p = '\0';		
-		indice = atol(buf);
-		
-		p++; // p aponta para o início do NOME
-		p[strlen(p)-1]='\0'; //remove \n
-
-		if( strstr( p, nome ) ){ // True se encontrou substring
-			// achou nome
-			return indice;
-			}
-		}
-	// Nome não encontrado
-	return NAOENCONTRADO;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Função: pegaRegPorIndex
 // 	Recupera registro a partir de índice
 // Recebe: 
@@ -127,6 +86,47 @@ int pegaRegPorIndex(Cadastro *reg, FILE *arq, int ind) {
 	fread( reg, sizeof(Cadastro), 1, arq);
 	return 1;
 }
+
+// Função: carregaIndice
+// Recebe: 
+//		ponteiro para registro (struct cadastro) 
+//		nome do arquivo de índice
+// Retorna:
+//		número de registros inseridos na lista
+
+int carregaIndice(char *arqIndice, struct ListaDL *lista){
+	FILE *ndxfp;
+	char buf[100];
+	int indice;
+	int conta=0;
+	char *p;
+
+	if( !(ndxfp = fopen(arqIndice,"r")) ) {
+		printf("Erro ao abrir arquivo índice.\n");
+		return 0;
+		}
+	apagaDL( lista ); 
+
+	printf("Carregando índice na memória\n");
+	while( fgets( buf, 100, ndxfp) ) {
+		// extrai de buf o número do índice
+		p=buf;
+		while(*p!=' ') p++;
+		*p = '\0';		
+		indice = atol(buf);
+		
+		p++; // p aponta para o início do NOME
+		p[strlen(p)-1]='\0'; //remove \n
+
+		insereDL(indice, p, lista); 
+		conta++;
+		if(conta%100==0) printf("\r%d",conta);
+		}
+	printf("\r");
+	return conta;
+}
+
+
 
 
 
