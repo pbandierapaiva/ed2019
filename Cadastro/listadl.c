@@ -21,11 +21,12 @@ void insereDL(long int valor, char *nome, struct ListaDL *lista) {
 	p = lista->proximo;
 	lista->proximo = novoNo;
 	if(p==NULL) {   //Lista vazia
-		//novoNo->proximo = lista;
+		novoNo->proximo = NULL;
 		return;
 		}
 	// insere no início da lista
 	novoNo->proximo = p;
+	p->anterior = novoNo;
 
 }
 
@@ -49,15 +50,16 @@ void imprimeDL(struct ListaDL lista) {
 void apagaDL(struct ListaDL *lista) {
 	struct ListaDL *p, *q;
 
-	printf("\nApagando Lista duplamente ligada... \n");
+	printf("\nApagando Lista duplamente ligada... ");
 	p = lista->proximo;
 	lista->proximo = NULL;
 	lista->anterior = NULL;
-	while( p ){
+	while( p && p!=lista){
 		q = p->proximo;
 		free(p);	
 		p=q;
 	}
+	printf("apagada.\n");
 }
 
 
@@ -65,15 +67,18 @@ void swapAdjDL(struct ListaDL *tico) {
 	swapDL(tico, tico->proximo);
 }
 
-void swapDL(struct ListaDL *tico,struct ListaDL *teco) {
+void swapDL(struct ListaDL *a,struct ListaDL *b) {
 	struct ListaDL *p;
-	
-	p= teco->anterior;
-	teco->anterior=tico->anterior;
-	tico->anterior = p;
-	p= teco->proximo;
-	teco->proximo = tico->proximo;
-	tico->proximo = p;
+
+	a->anterior->proximo=b;
+	if(b->proximo)
+		b->proximo->anterior=a;
+	p = a->anterior;
+	a->anterior = b;
+	b->anterior = p;
+	p = b->proximo;
+	b->proximo = a;
+	a->proximo = p;
 }
 
 //ordena
@@ -84,16 +89,17 @@ void ordenaDL(struct ListaDL *raiz) {
 	int alterou=1;
 
 	p= raiz->proximo;
-	if(!p) return;
+	if(!p) return; //lista vazia
 	while( alterou ) {
 		alterou=0;
-		while(p->proximo!=raiz) {
-			if( strcmp( p->nome , p->proximo->nome ) < 0 ) {
+		while(p!=NULL && p->proximo!=NULL ) { //p->proximo NULL quando chega ao final da lista
+			if( strcmp( p->nome , p->proximo->nome ) > 0 ) {
 				swapAdjDL(p);
 				alterou=1;
 				}
 			p = p->proximo;
 		}
+		p= raiz->proximo; // volta ao início da lista
 	}
 
 

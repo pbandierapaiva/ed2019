@@ -28,10 +28,11 @@ int main() {
 	strcpy(raizResultadoBusca.nome,"NO RAIZ");
 	raizResultadoBusca.indice=0;
 	raizResultadoBusca.proximo=NULL; // Lista vazia
-
+	raizResultadoBusca.anterior=NULL;
 	strcpy(raizIndice.nome,"NO RAIZ");
 	raizIndice.indice=0;
 	raizIndice.proximo=NULL; // Lista vazia
+	raizIndice.anterior=NULL;
 
 	char *p;
 	clock_t inicio, fim;
@@ -73,7 +74,7 @@ int main() {
 			continue;
 			}
 		// Ordena resultado
-		//ordenaDL(&raizResultadoBusca );
+		ordenaDL(&raizResultadoBusca );
 		
 
 		pdl = raizResultadoBusca.proximo;
