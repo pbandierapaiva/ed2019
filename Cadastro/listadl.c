@@ -62,6 +62,18 @@ void apagaDL(struct ListaDL *lista) {
 	printf("apagada.\n");
 }
 
+long int contaDL(struct ListaDL *raiz) {
+	long int i=0;
+	struct ListaDL *p;
+
+	p = raiz->proximo;
+
+	while( p ) {
+		i++;
+		p=p->proximo;
+		}	
+	return i;
+}
 
 void swapAdjDL(struct ListaDL *tico) {
 	swapDL(tico, tico->proximo);
@@ -81,27 +93,26 @@ void swapDL(struct ListaDL *a,struct ListaDL *b) {
 	a->proximo = p;
 }
 
-//ordena
-
-
+// Ordena utilizando algoritmo semelhante ao Bubblesort
 void ordenaDL(struct ListaDL *raiz) {
-	struct ListaDL *p, *q;
+	struct ListaDL *p;
 	int alterou=1;
 
-	p= raiz->proximo;
+	p = raiz->proximo;
+
 	if(!p) return; //lista vazia
 	while( alterou ) {
 		alterou=0;
-		while(p!=NULL && p->proximo!=NULL ) { //p->proximo NULL quando chega ao final da lista
+		while(p && p->proximo ){
 			if( strcmp( p->nome , p->proximo->nome ) > 0 ) {
 				swapAdjDL(p);
 				alterou=1;
 				}
 			p = p->proximo;
 		}
-		p= raiz->proximo; // volta ao início da lista
-	}
 
+		p = raiz->proximo;
+	}
 
 }
 

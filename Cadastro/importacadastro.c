@@ -18,7 +18,7 @@ int main() {
 
 	int num=0;
 
-	num = leCSVgravaStru("cadastro2019.csv","cadstru.arq");
+	num = leCSVgravaStru("../data/cadastro2019.csv","../data/cadstru.arq");
 	printf("\nTotal de registros lidos: %d\n\n",num);
 
 	return 0;
@@ -32,7 +32,7 @@ int leCSVgravaStru(char *nomeArq, char *arqSaida) {
 	char buf[1500]="";
 	char *p, *q;
 	//cadastro *s;
-	cadastro reg;
+	Cadastro reg;
 	
 	//s = sptr;
 

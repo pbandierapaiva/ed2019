@@ -81,12 +81,15 @@ int main() {
 		pdl = raizResultadoBusca.proximo;
 		while(pdl) {
 			pegaRegPorIndex(&registro, fp, pdl->indice);
-			printf("\nNome: \t%s\nLotação: \t%s\nCargo: \t%s\n\n",
-					registro.NOME, registro.UORG_LOTACAO, registro.DESCRICAO_CARGO);
-			pdl = pdl->proximo;
-			}
-		printf("Número de ocorrências encontradas: %ld\n",i);
+//			printf("Nome: \t%s Lotação: \t%s Cargo: \t%s\n",
+//					registro.NOME, registro.UORG_LOTACAO, registro.DESCRICAO_CARGO);
+			printf("Nome: \t%s\n",registro.NOME);
 
+			pdl = pdl->proximo;
+
+			}
+
+		printf("Número de ocorrências encontradas: %ld\n",i);
 		printf("Tempo de consulta %f s\n", (double)(fimBusca - inicio) / CLOCKS_PER_SEC);
 		printf("Tempo para ordenar %f s\n", (double)(fimOrdena - fimBusca) / CLOCKS_PER_SEC);
 

@@ -22,12 +22,12 @@ int main() {
 	FILE *fp;
 	FILE *ofp;
 
-	cadastro reg; 
+	struct Cadastro reg; 
 
 
 
-	fp = fopen("cadstru.arq","r");
-	ofp = fopen("cadstru.ndx","w");
+	fp = fopen("../data/cadstru.arq","r");
+	ofp = fopen("../data/cadstru.ndx","w");
 
 	
 	if( !fp || !ofp ) {

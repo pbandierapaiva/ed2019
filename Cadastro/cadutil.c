@@ -94,7 +94,7 @@ int pegaRegPorIndex(Cadastro *reg, FILE *arq, int ind) {
 // Retorna:
 //		número de registros inseridos na lista
 
-int carregaIndice(char *arqIndice, struct ListaDL *lista){
+long int carregaIndice(char *arqIndice, struct ListaDL *lista){
 	FILE *ndxfp;
 	char buf[100];
 	int indice;

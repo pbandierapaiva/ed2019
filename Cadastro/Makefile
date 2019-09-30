@@ -5,7 +5,14 @@
 
 C = gcc -g
 
-all: consulta consulta-dl
+all: consulta consulta-dl indexacad importacadastro
+
+indexacad: indexacad.c cadastro.h
+	$(C) -o indexacad indexacad.c
+
+importacadastro: importacadastro.c cadastro.h
+	$(C) -o importacadastro importacadastro.c 
+
 
 consulta: consulta.o cadutil.o listadl.o
 	$(C) -o consulta  consulta.o cadutil.o listadl.o

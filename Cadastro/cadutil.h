@@ -6,5 +6,5 @@ int buscaIndexNome(FILE *, char *);
 int buscaListaIndexNome(FILE *, char *, struct ListaDL *);
 int pegaRegPorIndex(Cadastro *, FILE *, int);
 int buscaNome( char *, struct ListaDL,  struct ListaDL *);
-int carregaIndice(char *, struct ListaDL *);
+long int carregaIndice(char *, struct ListaDL *);
 
