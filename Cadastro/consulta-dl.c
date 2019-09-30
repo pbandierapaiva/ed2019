@@ -1,9 +1,9 @@
 /*
 * Programa: consulta-dl.c
-* 
+*
 * Busca nome em arquivo indexado, recupera registro, cronometra o tempo de busca
 *
-* Utiliza índice em uma lista duplamente encadeada alocada dinamicamente em memória ListaDL  
+* Utiliza índice em uma lista duplamente encadeada alocada dinamicamente em memória ListaDL
 *
 */
 
@@ -24,7 +24,7 @@ int main() {
 	//long int vetor[1000000];
 
 	struct ListaDL raizResultadoBusca, *pdl, raizIndice;
-	
+
 	strcpy(raizResultadoBusca.nome,"NO RAIZ");
 	raizResultadoBusca.indice=0;
 	raizResultadoBusca.proximo=NULL; // Lista vazia
@@ -35,7 +35,7 @@ int main() {
 	raizIndice.anterior=NULL;
 
 	char *p;
-	clock_t inicio, fim;
+	clock_t inicio, fimBusca, fimOrdena;
 
 	FILE *fp, *ndxfp;
 
@@ -67,7 +67,7 @@ int main() {
 
 		i =  buscaNome( nomebusca, raizIndice, &raizResultadoBusca );
 
-		fim = clock(); // PARA CRONOMETRO
+		fimBusca = clock(); // CRONOMETRO - final da busca
 
 		if( i==0 ){ // Não encontrado
 			printf("\nRegistro não encontrado\n\n");
@@ -75,7 +75,8 @@ int main() {
 			}
 		// Ordena resultado
 		ordenaDL(&raizResultadoBusca );
-		
+		fimOrdena =  clock(); // PARA CRONOMETRO Final da ordenação
+
 
 		pdl = raizResultadoBusca.proximo;
 		while(pdl) {
@@ -86,19 +87,10 @@ int main() {
 			}
 		printf("Número de ocorrências encontradas: %ld\n",i);
 
-		printf("Tempo de consulta %f s\n", (double)(fim - inicio) / CLOCKS_PER_SEC);
+		printf("Tempo de consulta %f s\n", (double)(fimBusca - inicio) / CLOCKS_PER_SEC);
+		printf("Tempo para ordenar %f s\n", (double)(fimOrdena - fimBusca) / CLOCKS_PER_SEC);
+
 		}
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-

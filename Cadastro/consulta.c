@@ -1,8 +1,8 @@
 /*
 * Programa: c.c
-* 
-* Busca nome em arquivo indexado, recupera registro, cronometra o tempo de busca
 *
+* Busca nome em arquivo indexado, recupera registro, cronometra o tempo de busca
+* Utiliza vetor para armazenar resultado de busca
 */
 
 #include <stdio.h>
@@ -42,7 +42,7 @@ int main() {
 		return 1;
 		}
 
-	
+
 	while(1) {
 		printf("Entre com nome para busca (Ctrl+C termina): ");
 		fgets( nomebusca, 100, stdin);
@@ -67,7 +67,7 @@ int main() {
 			printf("\nRegistro não encontrado\n\n");
 			continue;
 			}
-	
+
 		pdl = raiz.proximo;
 		while(pdl) {
 			pegaRegPorIndex(&registro, fp, pdl->indice);
@@ -81,14 +81,3 @@ int main() {
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
