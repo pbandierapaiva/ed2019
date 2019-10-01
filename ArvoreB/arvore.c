@@ -10,12 +10,20 @@
 
 // Programa principal para testar a ArvoreB
 int main() {
-	ArvoreB *raiz, *paux;
-	raiz = NULL;
+	ArvoreB *raiz = NULL;
+	int h=0, c=0;
 
 	entraDados(&raiz);
 	imprimeEmOrdem( raiz );
-	printf("Profundidade: %d\n",profundidade(raiz));
+	
+	printf("Profundidade: %d\n", altura(raiz));
+	printf("Número de nós: %d\n", contaNos(raiz));
+	if(eBalanceada(raiz)) 
+		printf("A árvore é balanceada!\n");
+	else
+		printf("A árvore não está balanceada!\n");
+
+	apaga(&raiz);
 	return 0;
 }
 
@@ -52,7 +60,7 @@ void insere(int valor, ArvoreB **noraiz) {
 
 void imprimeEmOrdem(ArvoreB *no) {  //imprime em-ordem
 	if( no==NULL ){
-		printf("No nulo\n");
+		printf("Árvore vazia\n");
 		return;
 		}
 	if( no->pe )
@@ -68,9 +76,39 @@ int maximo(int a, int b){
 	return b;
 	}
 
-// Retorna a  profundidade de uma árvore abaixo do nó
-int profundidade(ArvoreB *no) {
+int contaNos(ArvoreB *no) {
+	if(!no) return 0;
+	return 1+ contaNos(no->pe)+contaNos(no->pd);
+	}
+	
+// Retorna a  altura de uma árvore abaixo do nó
+int altura(ArvoreB *no) {
 	if( !no )
 		return 0;
-	return 1+maximo(profundidade(no->pe),profundidade(no->pd));
+	return 1+maximo(altura(no->pe),altura(no->pd));
 	}
+	
+//int profundidade(ArvoreB *no) {}
+
+int eBalanceada(ArvoreB *no) {
+	return (contaNos(no) > (1<<(altura(no)-1))-1); 
+}
+
+void apaga(ArvoreB **no) {
+		if(! no || ! *no) return;
+		apaga(&((*no)->pe));
+		apaga(&((*no)->pd));
+		free(*no);
+		*no=NULL;
+		return;
+}
+
+
+
+
+
+
+
+
+
+

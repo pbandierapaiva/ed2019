@@ -12,7 +12,9 @@ struct arvore {
 typedef struct arvore ArvoreB;
 
 void insere(int , ArvoreB **);
-void imprime(ArvoreB *);
+void imprimeEmOrdem(ArvoreB *);
 void entraDados(ArvoreB **);
 int maximo(int, int );
-int profundidade(ArvoreB *);
+int altura(ArvoreB *);
+int contaNos(ArvoreB *);
+int eBalanceada(ArvoreB *);
