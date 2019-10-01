@@ -14,11 +14,12 @@ int main() {
 	raiz = NULL;
 
 	entraDados(&raiz);
-	imprime( raiz );
+	imprimeEmOrdem( raiz );
 	printf("Profundidade: %d\n",profundidade(raiz));
 	return 0;
 }
 
+// Entrada de dados via teclado
 void entraDados(ArvoreB **raiz) {
 	int valor;
 
@@ -49,16 +50,16 @@ void insere(int valor, ArvoreB **noraiz) {
 
 	}
 
-void imprime(ArvoreB *no) {  //imprime em-ordem
+void imprimeEmOrdem(ArvoreB *no) {  //imprime em-ordem
 	if( no==NULL ){
 		printf("No nulo\n");
 		return;
 		}
 	if( no->pe )
-		imprime(no->pe);
+		imprimeEmOrdem(no->pe);
 	printf("%d\n", no->nodeVal);
 	if( no->pd )
-		imprime(no->pd);
+		imprimeEmOrdem(no->pd);
 	}
 
 // Compara dois valores e retorna o maior
