@@ -10,15 +10,30 @@
 
 int main() {
 	MatrizE raiz;
+	int l,c;
+	int val;
 
 	raiz.lin = -1;
 	raiz.col = -1;
 	raiz.direita=&raiz;
-	raiz.baixo=&raiz;
+	raiz.abaixo=&raiz;
+	
+	while( 1 ){
+		printf("Entre com inteiros para linha coluna valor (0 0 0 termina): ");
+		scanf("%d %d %d", &l, &c, &val);
+		if(l==0) break;
+		insere(&raiz, l, c, val);
+		
+	}
+	
 
 }
 
-MatrizE *achaCol(MatrizE *noRaiz, int coluna) {
+// pegaCol
+// Recebe raiz da Matriz esparsa e coluna
+// Retorna ponteiro para coluna (já existente ou criada caso
+// não exista)
+MatrizE *pegaCol(MatrizE *noRaiz, int coluna) {
 	MatrizE *p, *q, *novaCol;
 
 	p= noRaiz;
@@ -35,30 +50,35 @@ MatrizE *achaCol(MatrizE *noRaiz, int coluna) {
 		}
 	novaCol = malloc(sizeof(MatrizE));
 	novaCol->col = coluna;
-	novaCol->baixo = novaCol;
+	novaCol->abaixo = novaCol;
 	novaCol->direita = q->direita;
 	q->direita = novaCol;
 	return novaCol;
 }
 
-MatrizE *achaLin(MatrizE *noRaiz, int linha) {
+
+// pegaLin
+// Recebe raiz da Matriz esparsa e número da linha
+// Retorna ponteiro para linha (já existente ou criada caso
+// não exista)
+MatrizE *pegaLin(MatrizE *noRaiz, int linha) {
 	MatrizE *p, *q, *novaLin;
 
 	p= noRaiz;
 	q=p;
-	while(p->baixo!=noRaiz) {
+	while(p->abaixo!=noRaiz) {
 		if( p->lin == linha )
 			return p;
 		if( linha > p->lin ){
 			q = p;
-			p = p->baixo;
+			p = p->abaixo;
 			}
 		else
 			break;
 		}
 	novaLin = malloc(sizeof(MatrizE));
 	novaLin->lin = linha;
-	novaLin->direta = novaLin;
+	novaLin->direita = novaLin;
 
 	novaLin->abaixo = q->abaixo;
 	q->abaixo = novaLin;
@@ -73,16 +93,16 @@ void insereNoCol(MatrizE *pCol, MatrizE *no, int linha) {
 	while( p != pCol && linha > p->lin  ) {
 		if(  linha == p->lin  ){
 			// Nó ja existe
-			no->baixo = p->baixo;
-			q->baixo = no;
-			free(p)
+			no->abaixo = p->abaixo;
+			q->abaixo = no;
+			free(p);
 			return;
 			}
 		q=p;
-		p=p->baixo;
+		p=p->abaixo;
 		}
-	no->baixo = q->baixo;
-	q->baixo = no;
+	no->abaixo = q->abaixo;
+	q->abaixo = no;
 }
 
 void insereNoLin(MatrizE *pLin, MatrizE *no, int coluna) {
@@ -95,7 +115,7 @@ void insereNoLin(MatrizE *pLin, MatrizE *no, int coluna) {
 			// Nó ja existe
 			no->direita = p->direita;
 			q->direita = no;
-			free(p)
+			free(p);
 			return;
 			}
 		q=p;
@@ -114,21 +134,14 @@ void insere(MatrizE *noRaiz, int i, int j, int val) {
 	no->col = j;
 	no->valor = val;
 	no->direita = no;
-	no->baixo = no;
+	no->abaixo = no;
 
-	pLin = achaLin(noRaiz, i);
-	pCol = achaCol(noRaiz, j);
+	pLin = pegaLin(noRaiz, i);
+	pCol = pegaCol(noRaiz, j);
+	insereNoLin(pLin, no, i);
+	insereNoCol(pCol, no, j);
+}
 
-
-	
-
-
-		
-
-	
-
-
-} 
 
 
 
