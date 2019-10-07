@@ -3,15 +3,17 @@
 */
 //#define _GNU_SOURCE
 
-struct ListaDL {
+struct listadl {
 	long int valor;
-	struct ListaDL *anterior;
-	struct ListaDL *proximo;
+	struct listadl *anterior;
+	struct listadl *proximo;
 
 };
+typedef struct listadl ListaDL;
 
-void insereDL(long int, struct ListaDL *);
-void imprimeDL(struct ListaDL);
-void removePtrDL(struct ListaDL *, struct ListaDL *);
-void removeItemPorValorDL(long, struct ListaDL *);
+
+void insereDL(long int,  ListaDL *);
+void imprimeDL( ListaDL);
+void removePtrDL( ListaDL *,  ListaDL *);
+void removeItemPorValorDL(long,  ListaDL *);
 

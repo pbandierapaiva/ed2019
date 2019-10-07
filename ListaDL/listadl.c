@@ -1,5 +1,5 @@
-/* Arquivo: listaligada.c
-* 	Definição de funções que implementam lista ligada.
+/* Arquivo: listadl.c
+* 	Definição de funções que implementam lista duplamente ligada: ListaDL.
 */
 #include <stdio.h>
 #include <string.h>
@@ -7,11 +7,11 @@
 
 #include "listadl.h"
 
-void insereDL(long int valor, struct ListaDL *lista) {
-	struct ListaDL *novoNo;
-	struct ListaDL *p;
+void insereDL(long int valor, ListaDL *lista) {
+	ListaDL *novoNo;
+	ListaDL *p;
 
-	novoNo = malloc(sizeof(struct ListaDL));
+	novoNo = malloc(sizeof(ListaDL));
 	novoNo->valor = valor;
 	novoNo->proximo = NULL;
 	novoNo->anterior = NULL;
@@ -30,8 +30,8 @@ void insereDL(long int valor, struct ListaDL *lista) {
 
 }
 
-void imprimeDL(struct ListaDL lista) {
-	struct ListaDL *p;
+void imprimeDL(ListaDL lista) {
+	ListaDL *p;
 
 	printf("\nLista duplamente ligada: \n");
 	p = lista.proximo;
@@ -42,7 +42,7 @@ void imprimeDL(struct ListaDL lista) {
 
 }
 
-void removePtrDL(struct ListaDL *item, struct ListaDL *raiz) {
+void removePtrDL(ListaDL *item, ListaDL *raiz) {
 
 
 
@@ -53,8 +53,8 @@ void removePtrDL(struct ListaDL *item, struct ListaDL *raiz) {
 	free( item );
 }
 
-void removeItemPorValorDL(long val, struct ListaDL *raiz) {
-	struct ListaDL *p;
+void removeItemPorValorDL(long val, ListaDL *raiz) {
+	ListaDL *p;
 
 	p = raiz->proximo;
 
@@ -68,7 +68,7 @@ void removeItemPorValorDL(long val, struct ListaDL *raiz) {
 int main(){
 
 	long int valor, buscaval;
-	struct ListaDL noRaiz; 
+	ListaDL noRaiz; 
 
 	noRaiz.valor=0;
 	noRaiz.proximo=NULL;
