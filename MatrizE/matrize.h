@@ -17,4 +17,5 @@ MatrizE *pegaLin(MatrizE *, int );
 void insereNoCol(MatrizE *, MatrizE *, int );
 void insereNoLin(MatrizE *, MatrizE *, int );
 void insere(MatrizE *, int , int , int );
+void imprimeMatriz(MatrizE *);
 

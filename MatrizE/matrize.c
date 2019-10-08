@@ -23,10 +23,8 @@ int main() {
 		scanf("%d %d %d", &l, &c, &val);
 		if(l==0) break;
 		insere(&raiz, l, c, val);
-		
 	}
-	
-
+	imprimeMatriz(&raiz);
 }
 
 // pegaCol
@@ -123,6 +121,7 @@ void insereNoLin(MatrizE *pLin, MatrizE *no, int coluna) {
 		}
 	no->direita = q->direita;
 	q->direita = no;
+	
 }
 
 
@@ -142,16 +141,60 @@ void insere(MatrizE *noRaiz, int i, int j, int val) {
 	insereNoCol(pCol, no, j);
 }
 
+int nColunas(MatrizE *raiz) {
+	MatrizE *pCol;
+	int tam=0;
+	pCol = raiz->direita;
+	while(pCol!=raiz) {
+		tam = pCol->col;
+		pCol = pCol->direita;
+	}
+	return tam;
+}
+	
+// imprimeMatriz
+// Imprime matriz esparsa completa (com 0 onde não há nó)
+void imprimeMatriz(MatrizE *raiz) {
+	MatrizE *pLinha, *pNo;
+	int largura;
+	int linhaCorrente=1, colCorrente;
+	
+	largura = nColunas(raiz);
+	printf("\nImprimindo matriz esparsa largura: %d.\n",largura);
 
+	pLinha= raiz->abaixo;
+	while(pLinha != raiz) {
+		printf("Linha: %d\n", linhaCorrente);
+		if(pLinha->lin > linhaCorrente) {
+			for(int i=0;i<largura;i++)
+				printf("0\t");
+			linhaCorrente++;
+		}
+		pNo= pLinha->direita;
+		colCorrente=1;
+		while(pNo != pLinha) {
+			while(pNo->col > colCorrente) {
+				printf("0\t");
+				colCorrente++;
+			}
+			printf("%d\t",pNo->valor);
+			colCorrente++;
+			pNo= pLinha->direita;
+		}
+		while(colCorrente<largura) {
+			printf("0\t");
+			colCorrente++;
+		}
+		printf("\n");
+		colCorrente=1;
+	}
+}
 
-
-
-
-
-
-
-
-
-
-
-
+void imprimeLinha(MatrizE *raiz, int linha) {
+	MatrizE *p;
+	
+	p=raiz.abaixo;
+}
+	
+	
+}
