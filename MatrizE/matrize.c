@@ -23,8 +23,11 @@ int main() {
 		scanf("%d %d %d", &l, &c, &val);
 		if(l==0) break;
 		insere(&raiz, l, c, val);
+	}		
+	for(int i=0; i<nLinhas(&raiz); i++) {
+		printf("\nLinha: %d\t",i+1);
+		imprimeLinha(&raiz, i);
 	}
-	imprimeMatriz(&raiz);
 }
 
 // pegaCol
@@ -71,9 +74,10 @@ MatrizE *pegaLin(MatrizE *noRaiz, int linha) {
 			q = p;
 			p = p->abaixo;
 			}
-		else
+		else // linha > p->lin
 			break;
 		}
+	// linha não existe, cria nova
 	novaLin = malloc(sizeof(MatrizE));
 	novaLin->lin = linha;
 	novaLin->direita = novaLin;
@@ -140,7 +144,16 @@ void insere(MatrizE *noRaiz, int i, int j, int val) {
 	insereNoLin(pLin, no, i);
 	insereNoCol(pCol, no, j);
 }
-
+int nLinhas(MatrizE *raiz) {
+	MatrizE *pLin;
+	int tam=0;
+	pLin = raiz->abaixo;
+	while(pLin!=raiz) {
+		tam = pLin->lin;
+		pLin = pLin->abaixo;
+	}
+	return tam;
+}
 int nColunas(MatrizE *raiz) {
 	MatrizE *pCol;
 	int tam=0;
@@ -190,11 +203,42 @@ void imprimeMatriz(MatrizE *raiz) {
 	}
 }
 
-void imprimeLinha(MatrizE *raiz, int linha) {
+MatrizE *achaLinha(MatrizE *raiz, int linha) {
 	MatrizE *p;
 	
-	p=raiz.abaixo;
+	// acha a linha percorrendo a lista de linhas
+	p=raiz->abaixo;
+	while(p != raiz) {
+		if(p->lin == linha){ // achou a linha
+			return p;
+		}
+		p=p->abaixo;
+	}
+	return NULL;
 }
+
+void imprimeLinha(MatrizE *raiz, int linha) {
+	MatrizE *p, *pLinha;
+	int contador=0, largura;
+
+	largura = nColunas(raiz);
+//	printf("\nImprimindo matriz esparsa largura: %d.\n",largura);
 	
+	pLinha = achaLinha(raiz, linha);
+	if(!pLinha) { // linha vazia
+		for(int i=0;i<largura;i++)
+			printf("0\t"); // Linha vazia
+		return;
+	}
+		
+	p=pLinha->direita;
+	while(p != pLinha) { //lista circular
+		contador++;
+		if(p->lin == contador)
+			printf("%d\t", p->valor);
+		else
+			printf("0\t");
+		p = p->direita;
+	}
 	
 }

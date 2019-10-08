@@ -18,4 +18,7 @@ void insereNoCol(MatrizE *, MatrizE *, int );
 void insereNoLin(MatrizE *, MatrizE *, int );
 void insere(MatrizE *, int , int , int );
 void imprimeMatriz(MatrizE *);
-
+MatrizE *achaLinha(MatrizE *raiz, int linha);
+void imprimeLinha(MatrizE *raiz, int linha);
+int nLinhas(MatrizE *raiz);
+int nColunas(MatrizE *raiz);
