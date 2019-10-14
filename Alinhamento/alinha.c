@@ -34,7 +34,7 @@ int *alinhaSW(char *s1, char *s2, int match, int mismatch, int gap) {
 		for(int j=1; j<w; j++) {
 			max = 0;
 			cur = S[(i-1)*w+(j-1)];
-			if( s1[ i ] == s2[ j ]) 
+			if( s1[ i-1 ] == s2[ j-1 ]) 
 				cur = cur+match;
 			else
 				cur = cur+mismatch;
