@@ -7,7 +7,6 @@ class No:
 		self.indice=i
 		self.noE = None
 		self.noD = None
-		self.listaResp =[]
 	def insereNo(self, no):
 		if no.nome > self.nome:
 			if self.noD:
@@ -30,25 +29,39 @@ class No:
 			if not self.noD: return None
 			return self.noD.acha(nomeB)
 	def achaPadrao(self, padrao):
-		self.listaResp =[]
+		listaR = []
 		padrao = padrao.upper()
-		self.achaPadraoNo(padrao)
-		for it in self.listaResp:
-			inf.seek(it.indice)
-			p = str(inf.readline()).split('|')
-			print(p[2],p[3],p[12])
-	def achaPadraoNo(self,padrao):
-		if padrao in self.nome:
-			self.listaResp.append(self)
-			print(self.nome)
+		self.achaPadraoNo(padrao,listaR)
+		return listaR
+	def achaPadraoNo(self,padrao, liR):
 		if self.noE: 
-			self.noE.achaPadraoNo(padrao)	
+			self.noE.achaPadraoNo(padrao,liR)	
+		if padrao in self.nome:
+			liR.append(self.indice)
+			#print(self.nome)
 		if self.noD: 
-			self.noD.achaPadraoNo(padrao)
+			self.noD.achaPadraoNo(padrao, liR)
+
+def imprimeReg(indice):
+	#global inf
+	inf.seek(it)
+	p = str(inf.readline()).split('|')
+	print(p[2],"\t",p[3],"\t",p[12])
+def imprimeRegList(l):
+	for it in l: imprimeReg(it)
+		
 
 
-inf = open("../data/cadastro2019.csv",encoding='l2')
-#indf = open("../data/cadpy.ndx","w")
+
+inf = open("../data/cadastro2019.csv",encoding='l1')
+#try: 
+#	indf = open("../data/cadpy.ndx","r")
+#except: 
+#	li = inf.readline()
+#	fpos = inf.tell()
+#	li = inf.readline()
+#	while(li):
+#		indf.write( str(li).split('|')[2] + ' '+str(fpos)+"\n")
 
 li = inf.readline()
 fpos = inf.tell()
@@ -62,10 +75,21 @@ while(li):
 	novoNo = No( str(li).split('|')[2],fpos )
 	if not arvore:
 		arvore = novoNo
-		inicio=False
 	else:
 		arvore.insereNo(novoNo)
 	
 	fpos = inf.tell()
 	li = inf.readline()
+
+
+
+
+
+
+
+
+
+
+
+
 
