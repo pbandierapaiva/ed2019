@@ -47,7 +47,7 @@ class No:
 			self.noD.achaPadraoNo(padrao)
 
 
-inf = open("../data/cadastro2019.csv","rb")
+inf = open("../data/cadastro2019.csv",encoding='l2')
 #indf = open("../data/cadpy.ndx","w")
 
 li = inf.readline()
