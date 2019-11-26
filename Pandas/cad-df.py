@@ -30,7 +30,7 @@ ndup = dup.apply( lambda x: not(x) )
 # df com nomes únicos
 cadu = cad[naodup]
 
-cadu = cad.drop_duplicates(['NOME'])
+cadu = cad.drop_duplicates(['Id_SERVIDOR_PORTAL'])
 
 poruf =cadu.groupby(['UF_EXERCICIO'])
 poruf.size()
